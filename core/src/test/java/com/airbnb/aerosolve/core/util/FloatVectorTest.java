@@ -80,4 +80,18 @@ public class FloatVectorTest {
     assertEquals(4.0, result.maxValue, 0.1f);
   }
 
+  @Test
+  public void testMinMaxResultWhenMaxAtMid() {
+    // The maximum of the second half occurs at index `mid` (2). The previous
+    // implementation initialized maxIndex to 1 which would have returned an
+    // incorrect index in this case.
+    FloatVector v = new FloatVector(new float[]{1.0f, -2.0f, 5.0f, 4.0f});
+    FloatVector.MinMaxResult result = v.getMinMaxResult();
+    assertEquals(0, result.minIndex);
+    assertEquals(1.0, result.minValue, 0.1f);
+
+    assertEquals(2, result.maxIndex);
+    assertEquals(5.0, result.maxValue, 0.1f);
+  }
+
 }

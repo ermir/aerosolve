@@ -212,7 +212,12 @@ public class FloatVector implements Serializable {
         result.minIndex = i;
       }
     }
-    result.maxIndex = 1;
+    // Initialize maxIndex to the first element of the "max" half of the vector.
+    // The original implementation incorrectly set this to 1 which would
+    // yield wrong indices when the maximum value occurred at index `mid`.
+    // Setting it to `mid` ensures the first candidate from the second half is
+    // considered correctly.
+    result.maxIndex = mid;
     result.maxValue = values[mid];
     for (int i = mid + 1; i < values.length; i++) {
       float curr = values[i];
